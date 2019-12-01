@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# Description:
+#	Installation de Nextcloud 17.0.1 sur Debian Buster (10)
+#----------------------------------------------------------------#
+# Usage: ./install_nextcloud.sh
+#	Exécuter le script en root!
+#
+# Auteurs:
+# Aurélie Pouteau
+# Jovial Ndongui
+# Daniel Dos Santos
+# Killian Boulard
+#----------------------------------------------------------------#
+
+apt update && apt full-upgrade -y
+
 # Variables
 vernext="17.0.1"
 verphp="7.3"
@@ -9,9 +24,10 @@ mariadatabase="nextcloud"
 mariauser="daniel"
 mariapasswd="efficom"
 
+ipnet=$(hostname -I | awk '{print $1}')
+usertos=$(w | awk '{print $1}' | awk 'NR==3')
+
 # Fonctions
-
-
 
 #installation des dépendances
 apt install apache2  -y
@@ -102,4 +118,4 @@ service apache2 reload
 
 chown -R www-data:www-data /var/www/html/nextcloud/
 
-sudo -u firefox http://$(hostname -I)/nextcloud
+sudo -u "$usertos" firefox http://"$ipnet"/nextcloud
