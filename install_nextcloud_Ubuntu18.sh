@@ -104,4 +104,4 @@ a2enmod ssl
 a2ensite default-ssl
 service apache2 reload
 
-sudo -u daniel firefox http://192.168.0.26/nextcloud
+echo -e " \n Connecter vous sur https://192.168.0.26/nextcloud pour continuer l'installation ! \n"
