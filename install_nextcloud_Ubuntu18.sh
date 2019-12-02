@@ -104,6 +104,17 @@ a2enmod ssl
 a2ensite default-ssl
 service apache2 restart
 
+# Résoudre les alertes
+sed -i '172s/AllowOverride\ None/AllowOverride\ All/' /etc/apache2/apache2.conf
+service apache2 restart
+
+# Enabling MySQL 4-byte support
+#https://docs.nextcloud.com/server/17/admin_manual/configuration_database/mysql_4byte_support.html
+SET GLOBAL innodb_file_format=Barracuda;
+SET GLOBAL innodb_large_prefix=ON;
+
+
+
 echo -e " \n Connecter vous sur https://192.168.0.26 pour continuer l'installation ! \n"
 echo -e "Identifiants de la Base de données"
 echo -e "Utilisateur de la base de donnée : "
