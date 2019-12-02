@@ -9,41 +9,41 @@ apt update && apt full-upgrade -y
 # Restart services during package upgrades without asking? Yes
 
 # dependances
-apt install curl
-apt install gnupg2
-apt install git
-apt install apt-transport-https
-apt install tree
-apt install locate
-apt install software-properties-common
-apt install screen
-apt install htop
-apt install zip
-apt install ffmpeg
-apt install ghostscript
-apt install libfile-fcntllock-perl
+apt install curl -y
+apt install gnupg2 -y
+apt install git -y
+apt install apt-transport-https -y
+apt install tree -y
+apt install locate -y
+apt install software-properties-common -y
+apt install screen -y
+apt install htop -y
+apt install zip -y
+apt install ffmpeg -y
+apt install ghostscript -y
+apt install libfile-fcntllock-perl -y
 
 # install Apache2
-apt install apache2
+apt install apache2 -y
 
 # install PHP
-add-apt-repository ppa:ondrej/php
-apt update
-apt install php7.3
-apt install php7.3-fpm
-apt install php7.3-gd
-apt install php7.3-mysql
-apt install php7.3-curl
-apt install php7.3-xml
-apt install php7.3-zip
-apt install php7.3-intl
-apt install php7.3-mbstring
-apt install php7.3-bz2
-apt install php7.3-ldap
-apt install php-apcu
-apt install imagemagick
-apt install php-imagick
-apt install php-smbclient
+add-apt-repository ppa:ondrej/php -y
+apt update -y
+apt install php7.3 -y
+apt install php7.3-fpm -y
+apt install php7.3-gd -y
+apt install php7.3-mysql -y
+apt install php7.3-curl -y
+apt install php7.3-xml -y
+apt install php7.3-zip -y
+apt install php7.3-intl -y
+apt install php7.3-mbstring -y
+apt install php7.3-bz2 -y
+apt install php7.3-ldap -y
+apt install php-apcu -y
+apt install imagemagick -y
+apt install php-imagick -y
+apt install php-smbclient -y
 
 # Configuration de PHP
 
@@ -65,7 +65,7 @@ sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php/7.3/apache2/php.ini
 systemctl restart apache2
 
 # install MariaDB
-apt install mariadb-server
+apt install mariadb-server -y
 
 # Configuration de MariaDB
 echo "
