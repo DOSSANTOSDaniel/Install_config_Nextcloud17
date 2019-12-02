@@ -102,6 +102,10 @@ a2enmod rewrite
 a2enmod headers
 a2enmod ssl
 a2ensite default-ssl
-service apache2 reload
+service apache2 restart
 
-echo -e " \n Connecter vous sur https://192.168.0.26/nextcloud pour continuer l'installation ! \n"
+echo -e " \n Connecter vous sur https://192.168.0.26 pour continuer l'installation ! \n"
+echo -e "Identifiants de la Base de données"
+echo -e "Utilisateur de la base de donnée : "
+echo -e "Mot de passe de la base de donnée : "
+echo -e "Nom de la base de donnée : \n"
