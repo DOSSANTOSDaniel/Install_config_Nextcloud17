@@ -88,29 +88,20 @@ FLUSH PRIVILEGES;
 EOT     
 
 # Installation de Nextcloud
-wget https://download.nextcloud.com/server/releases/nextcloud-"$vernext".zip
-# Vérification de l’intégrité du document téléchargé
-wget https://download.nextcloud.com/server/releases/nextcloud-"$vernext".zip.sha256
-sha256sum  -c nextcloud-"$vernext".zip.sha256 < nextcloud-"$vernext".zip
+wget https://download.nextcloud.com/server/releases/nextcloud-17.0.1.zip
+
 # Extraction
-apt install unzip
-unzip nextcloud-"$vernext".zip
+unzip nextcloud-17.0.1.zip
 cp -R nextcloud /var/www/html/
+chown -R www-data:www-data /var/www/html/nextcloud/
+
 # Configuration du serveur web
-touch /etc/apache2/sites-available/default-ssl.conf
-###
-"###
-####
-####
-####
-systemctl reload apache2
+sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot\/var\/www\/html\/nextcloud/' /etc/apache2/sites-available/default-ssl.conf
+
 a2enmod rewrite
-systemctl reload apache2
 a2enmod headers
-service apache2 restart
 a2enmod ssl
-service apache2 restart
 a2ensite default-ssl
 service apache2 reload
-chown -R www-data:www-data /var/www/html/nextcloud/
-sudo -u "$usertos" firefox http://"$ipnet"/nextcloud
+
+sudo -u daniel firefox http://192.168.0.26/nextcloud
