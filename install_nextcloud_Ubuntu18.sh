@@ -96,7 +96,7 @@ cp -R nextcloud /var/www/html/
 chown -R www-data:www-data /var/www/html/nextcloud/
 
 # Configuration du serveur web
-sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot\/var\/www\/html\/nextcloud/' /etc/apache2/sites-available/default-ssl.conf
+sed -i 's/DocumentRoot\ \/var\/www\/html/DocumentRoot\/var\/www\/html\/nextcloud/' /etc/apache2/sites-available/default-ssl.conf
 
 a2enmod rewrite
 a2enmod headers
