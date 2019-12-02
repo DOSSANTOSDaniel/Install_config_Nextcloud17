@@ -1,10 +1,8 @@
 #!/bin/bash
 
-Install Nextcloud 17 sur ubuntu 18.04
-_________________________________________
-https://www.c-rieger.de/nextcloud-installation-guide-ubuntu-18-04/
-
-Conteneur: 
+#Install Nextcloud 17 sur ubuntu 18.04
+#https://www.c-rieger.de/nextcloud-installation-guide-ubuntu-18-04/
+#Conteneur Proxmox: Ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz
 
 apt update && apt full-upgrade -y
 
