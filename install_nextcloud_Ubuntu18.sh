@@ -53,17 +53,13 @@ date
 
 cp /etc/php/$verphp/apache2/php.ini /etc/php/$verphp/apache2/php.ini.save
 
-sed -i -e '/^;/d' /etc/php/7.3/apache2/php.ini
 
-sed -i -e '/^$/d' /etc/php/7.3/apache2/php.ini
-
-
-sed -i -e 's/memory_limit = 128M/memory_limit = 512M/' /etc/php/7.3/apache2/php.ini
-sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 1024M/' /etc/php/7.3/apache2/php.ini
-sed -i -e 's/post_max_size = 8M/post_max_size = 1024M/' /etc/php/7.3/apache2/php.ini
-sed -i -e 's/max_execution_time = 30/max_execution_time = 300/' /etc/php/7.3/apache2/php.ini
-sed -i -e 's/max_input_time = 60/max_input_time = 600/' /etc/php/7.3/apache2/php.ini
-sed -i -e 's/memory_limit = 128M/memory_limit = 512M/' /etc/php/7.3/apache2/php.ini
+sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php/7.3/apache2/php.ini
+sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 1024M/' /etc/php/7.3/apache2/php.ini
+sed -i 's/post_max_size = 8M/post_max_size = 1024M/' /etc/php/7.3/apache2/php.ini
+sed -i 's/max_execution_time = 30/max_execution_time = 300/' /etc/php/7.3/apache2/php.ini
+sed -i 's/max_input_time = 60/max_input_time = 600/' /etc/php/7.3/apache2/php.ini
+sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php/7.3/apache2/php.ini
 
 
 systemctl restart apache2
@@ -72,7 +68,6 @@ systemctl restart apache2
 apt install mariadb-server
 
 # Configuration de MariaDB
-
 echo "
 Suivre les instructions:
 1 Définir un nouveau mdp ou garder le mot de passe du système. 
@@ -85,14 +80,12 @@ sleep 5
 
 mysql_secure_installation
 
-mysql -u root -p << EOT      
+mysql -u root -pdigital << EOT      
 CREATE DATABASE "$mariadatabase";
 CREATE USER "$mariauser"@'localhost' IDENTIFIED BY "$mariapasswd";
 GRANT ALL ON "$mariadatabase".* TO "$mariauser"@'localhost';
 FLUSH PRIVILEGES;
-> EOT     
-
-########################################################
+EOT     
 
 # Installation de Nextcloud
 wget https://download.nextcloud.com/server/releases/nextcloud-"$vernext".zip
