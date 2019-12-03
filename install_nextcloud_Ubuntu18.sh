@@ -110,10 +110,12 @@ service apache2 restart
 
 # Enabling MySQL 4-byte support
 #https://docs.nextcloud.com/server/17/admin_manual/configuration_database/mysql_4byte_support.html
-SET GLOBAL innodb_file_format=Barracuda;
-SET GLOBAL innodb_large_prefix=ON;
-
-
+#SET GLOBAL innodb_file_format=Barracuda;
+#SET GLOBAL innodb_large_prefix=ON;
+#systemctl restart mariadb
+#ALTER  DATABASE  nextcloud  CHARACTER  SET  utf8mb4  COLLATE  utf8mb4_general_ci ;
+#cd /var/www/html/nextcloud
+#sudo -u www-data php occ config:system:set mysql.utf8mb4 --type boolean --value="true"
 
 echo -e " \n Connecter vous sur https://192.168.0.26 pour continuer l'installation ! \n"
 echo -e "Identifiants de la Base de données"
