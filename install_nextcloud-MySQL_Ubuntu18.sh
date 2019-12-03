@@ -64,27 +64,54 @@ sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php/7.3/apache2/php.ini
 
 systemctl restart apache2
 
-# install MariaDB
-apt install mariadb-server -y
+# install MySQL
 
-# Configuration de MariaDB
+apt install mysql-server -y
+service mysql restart
+
+# Configuration de MySQL
+
 echo "
-Suivre les instructions:
-1 Définir un nouveau mdp ou garder le mot de passe du système. 
-2 Effacer l’utilisateur anonymous pour des raisons de sécurité.
-3 Désactiver la connexion sur la base de donnée avec le compte root à distance.
-4 Effacer les bases de données de test.
-5 Redémarrer les tables de droits.
-"
-sleep 5
+[server]
+skip-name-resolve
+innodb_buffer_pool_size = 128M
+innodb_buffer_pool_instances = 1
+innodb_flush_log_at_trx_commit = 2
+innodb_log_buffer_size = 32M
+innodb_max_dirty_pages_pct = 90
+query_cache_type = 1
+query_cache_limit = 2M
+query_cache_min_res_unit = 2k
+query_cache_size = 64M
+tmp_table_size= 64M
+max_heap_table_size= 64M
+slow-query-log = 1
+slow-query-log-file = /var/log/mysql/slow.log
+long_query_time = 1
 
-mysql_secure_installation
+[client-server]
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mysql.conf.d/
+
+[client]
+default-character-set = utf8mb4
+
+
+[mysqld]
+character-set-server = utf8mb4
+collation-server = utf8mb4_general_ci
+transaction_isolation = READ-COMMITTED
+binlog_format = ROW
+innodb_large_prefix=on
+innodb_file_format=barracuda
+innodb_file_per_table=1
+" > /etc/mysql/my.cnf
 
 mysql -u root -pdigital << EOT      
-CREATE DATABASE "$mariadatabase";
-CREATE USER "$mariauser"@'localhost' IDENTIFIED BY "$mariapasswd";
-GRANT ALL ON "$mariadatabase".* TO "$mariauser"@'localhost';
-FLUSH PRIVILEGES;
+CREATE USER 'next'@'localhost' IDENTIFIED BY 'digital';
+CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+GRANT ALL PRIVILEGES on nextcloud.* to 'next'@'localhost';
+FLUSH privileges;
 EOT     
 
 # Installation de Nextcloud
@@ -96,8 +123,7 @@ cp -R nextcloud /var/www/html/
 chown -R www-data:www-data /var/www/html/nextcloud/
 
 # Configuration du serveur web
-sed -i 's/DocumentRoot\ \/var\/www\/html/DocumentRoot\/var\/www\/html\/nextcloud/' /etc/apache2/sites-available/default-ssl.conf
-
+sed -i 's/DocumentRoot\ \/var\/www\/html/DocumentRoot\ \/var\/www\/html\/nextcloud/' /etc/apache2/sites-available/default-ssl.conf
 a2enmod rewrite
 a2enmod headers
 a2enmod ssl
