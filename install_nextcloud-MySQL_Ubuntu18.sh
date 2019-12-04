@@ -4,6 +4,18 @@
 #https://www.c-rieger.de/nextcloud-installation-guide-ubuntu-18-04/
 #Conteneur Proxmox: Ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz
 
+# Variables
+vernext="17.0.1"
+verphp="7.3"
+
+# identiants mariadb pour nextcloud
+mariadatabase="nextcloud"
+mariauser="daniel"
+mariapasswd="efficom"
+
+ipnet=$(hostname -I | awk '{print $1}')
+usertos=$(w | awk '{print $1}' | awk 'NR==3')
+
 apt update
 sleep 5
 apt full-upgrade -y
