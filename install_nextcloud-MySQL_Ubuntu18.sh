@@ -216,3 +216,7 @@ array (
 'updater.release.channel' => 'stable',
 );
 " >> /var/www/nextcloud/config/config.php
+
+systemctl restart apache2
+
+reboot now
