@@ -134,17 +134,85 @@ service apache2 restart
 sed -i '172s/AllowOverride\ None/AllowOverride\ All/' /etc/apache2/apache2.conf
 service apache2 restart
 
-# Enabling MySQL 4-byte support
-#https://docs.nextcloud.com/server/17/admin_manual/configuration_database/mysql_4byte_support.html
-#SET GLOBAL innodb_file_format=Barracuda;
-#SET GLOBAL innodb_large_prefix=ON;
-#systemctl restart mariadb
-#ALTER  DATABASE  nextcloud  CHARACTER  SET  utf8mb4  COLLATE  utf8mb4_general_ci ;
-#cd /var/www/html/nextcloud
-#sudo -u www-data php occ config:system:set mysql.utf8mb4 --type boolean --value="true"
+###
+sed -i -e "/ServerAdmin/a \                \Header always set Strict-Transport-Security 'max-age=15552000; includeSubDomains'" /etc/apache2/sites-available/default-ssl.conf
 
-echo -e " \n Connecter vous sur https://192.168.0.26 pour continuer l'installation ! \n"
+### Memory caching
+# Install and configure Redis
+apt update
+apt install redis-server -y
+apt install php-redis -y
+cp /etc/redis/redis.conf /etc/redis/redis.conf.save
+sed -i "s/port 6379/port 0/" /etc/redis/redis.conf
+sed -i s/\#\ unixsocket/\unixsocket/g /etc/redis/redis.conf
+sed -i "s/unixsocketperm 700/unixsocketperm 770/" /etc/redis/redis.conf
+sed -i "s/# maxclients 10000/maxclients 512/" /etc/redis/redis.conf
+usermod -aG redis www-data
+
+cp /etc/sysctl.conf /etc/sysctl.conf.save
+sed -i '$avm.overcommit_memory = 1' /etc/sysctl.conf
+
+echo -e " \n Connecter vous sur https://192.168.0.26 pour finaliser l'installation ! \n"
 echo -e "Identifiants de la Base de données"
 echo -e "Utilisateur de la base de donnée : "
 echo -e "Mot de passe de la base de donnée : "
 echo -e "Nom de la base de donnée : \n"
+
+read -p "Une fois l'installation terminée merci de valider avec la touche entrée"
+
+sed -i '/);/d' /var/www/html/nextcloud/config/config.php
+
+echo "
+'activity_expire_days' => 14,
+'auth.bruteforce.protection.enabled' => true,
+'blacklisted_files' => 
+array (
+0 => '.htaccess',
+1 => 'Thumbs.db',
+2 => 'thumbs.db',
+),
+'cron_log' => true,
+'enable_previews' => true,
+'enabledPreviewProviders' => 
+array (
+0 => 'OC\Preview\PNG',
+1 => 'OC\Preview\JPEG',
+2 => 'OC\Preview\GIF',
+3 => 'OC\Preview\BMP',
+4 => 'OC\Preview\XBitmap',
+5 => 'OC\Preview\Movie',
+6 => 'OC\Preview\PDF',
+7 => 'OC\Preview\MP3',
+8 => 'OC\Preview\TXT',
+9 => 'OC\Preview\MarkDown',
+),
+'filesystem_check_changes' => 0,
+'filelocking.enabled' => 'true',
+'htaccess.RewriteBase' => '/',
+'integrity.check.disabled' => false,
+'knowledgebaseenabled' => false,
+'logfile' => '/var/nc_data/nextcloud.log',
+'loglevel' => 2,
+'logtimezone' => 'Europe/Berlin',
+'log_rotate_size' => 104857600,
+'maintenance' => false,
+'memcache.local' => '\OC\Memcache\APCu',
+'memcache.locking' => '\OC\Memcache\Redis',
+'overwriteprotocol' => 'https',
+'preview_max_x' => 1024,
+'preview_max_y' => 768,
+'preview_max_scale_factor' => 1,
+'redis' => 
+array (
+'host' => '/var/run/redis/redis-server.sock',
+'port' => 0,
+'timeout' => 0.0,
+),
+'quota_include_external_storage' => false,
+'share_folder' => '/Shares',
+'skeletondirectory' => '',
+'theme' => '',
+'trashbin_retention_obligation' => 'auto, 7',
+'updater.release.channel' => 'stable',
+);
+" >> /var/www/nextcloud/config/config.php
