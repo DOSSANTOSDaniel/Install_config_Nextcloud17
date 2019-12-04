@@ -4,7 +4,9 @@
 #https://www.c-rieger.de/nextcloud-installation-guide-ubuntu-18-04/
 #Conteneur Proxmox: Ubuntu-18.04-standard_18.04.1-1_amd64.tar.gz
 
-apt update && apt full-upgrade -y
+apt update
+sleep 5
+apt full-upgrade -y
 
 # Restart services during package upgrades without asking? Yes
 
