@@ -109,7 +109,7 @@ innodb_file_format=barracuda
 innodb_file_per_table=1
 " > /etc/mysql/my.cnf
 
-mysql -u root -pdigital << EOT      
+mysql -u root -p'digital' << EOT      
 CREATE USER 'next'@'localhost' IDENTIFIED BY 'digital';
 CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 GRANT ALL PRIVILEGES on nextcloud.* to 'next'@'localhost';
@@ -195,7 +195,7 @@ array (
 'knowledgebaseenabled' => false,
 'logfile' => '/var/nc_data/nextcloud.log',
 'loglevel' => 2,
-'logtimezone' => 'Europe/Berlin',
+'logtimezone' => 'Europe/Paris',
 'log_rotate_size' => 104857600,
 'maintenance' => false,
 'memcache.local' => '\OC\Memcache\APCu',
