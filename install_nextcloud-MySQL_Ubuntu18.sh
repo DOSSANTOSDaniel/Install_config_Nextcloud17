@@ -8,7 +8,7 @@
 vernext="17.0.1"
 verphp="7.3"
 
-# identiants mariadb pour nextcloud
+# Identifiants mariadb pour nextcloud
 mariadatabase="nextcloud"
 mariauser="daniel"
 mariapasswd="efficom"
@@ -20,9 +20,7 @@ apt update
 sleep 5
 apt full-upgrade -y
 
-# Restart services during package upgrades without asking? Yes
-
-# dependances
+# Dépendances
 apt install curl -y
 apt install gnupg2 -y
 apt install git -y
@@ -37,10 +35,10 @@ apt install ffmpeg -y
 apt install ghostscript -y
 apt install libfile-fcntllock-perl -y
 
-# install Apache2
+# Installation de Apache2
 apt install apache2 -y
 
-# install PHP
+# Installation de PHP
 add-apt-repository ppa:ondrej/php -y
 apt update -y
 apt install php7.3 -y
@@ -78,7 +76,7 @@ sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php/7.3/apache2/php.ini
 
 systemctl restart apache2
 
-# install MySQL
+# installation de MySQL
 
 apt install mysql-server -y
 service mysql restart
@@ -151,8 +149,8 @@ service apache2 restart
 ###
 sed -i -e "/ServerAdmin/a \                \Header always set Strict-Transport-Security 'max-age=15552000; includeSubDomains'" /etc/apache2/sites-available/default-ssl.conf
 
-### Memory caching
-# Install and configure Redis
+### Mémoire cache
+# Installation et configuration de Redis
 apt update
 apt install redis-server -y
 apt install php-redis -y

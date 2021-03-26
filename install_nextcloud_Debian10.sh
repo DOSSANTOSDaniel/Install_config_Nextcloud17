@@ -19,7 +19,7 @@ apt update && apt full-upgrade -y
 vernext="17.0.1"
 verphp="7.3"
 
-# identiants mariadb pour nextcloud
+# Identifiants mariadb pour Nextcloud
 mariadatabase="nextcloud"
 mariauser="daniel"
 mariapasswd="efficom"
@@ -29,7 +29,7 @@ usertos=$(w | awk '{print $1}' | awk 'NR==3')
 
 # Fonctions
 
-#installation des dépendances
+#Installation des dépendances
 apt install apache2  -y
 apt install mariadb-server  -y
 apt install php"$verphp" -y
@@ -97,11 +97,9 @@ cp -R nextcloud /var/www/html/
 
 # Configuration du serveur web
 touch /etc/apache2/sites-available/default-ssl.conf
-###
-"###
-####
-####
-####
+
+# Partie a compléter 
+
 systemctl reload apache2
 
 a2enmod rewrite

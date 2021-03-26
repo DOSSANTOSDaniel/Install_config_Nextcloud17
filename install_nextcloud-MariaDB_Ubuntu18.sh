@@ -6,9 +6,7 @@
 
 apt update && apt full-upgrade -y
 
-# Restart services during package upgrades without asking? Yes
-
-# dependances
+# dépendances
 apt install curl -y
 apt install gnupg2 -y
 apt install git -y
@@ -23,10 +21,10 @@ apt install ffmpeg -y
 apt install ghostscript -y
 apt install libfile-fcntllock-perl -y
 
-# install Apache2
+# Installation de Apache2
 apt install apache2 -y
 
-# install PHP
+# Installation de PHP
 add-apt-repository ppa:ondrej/php -y
 apt update -y
 apt install php7.3 -y
@@ -64,7 +62,7 @@ sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php/7.3/apache2/php.ini
 
 systemctl restart apache2
 
-# install MariaDB
+# Installation de MariaDB
 apt install mariadb-server -y
 
 # Configuration de MariaDB
